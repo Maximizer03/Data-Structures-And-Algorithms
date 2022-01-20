@@ -1,21 +1,22 @@
 class Solution {
 public:
-     void calc(int v, int tar, vector<vector<int>>& graph, vector<vector<int>>&ans, vector<int>path ) {
-          if (v == tar) {
-               path.push_back(tar);
-               ans.push_back(path);
-               return;
-          }
+     void dfs(int v, vector<vector<int>>& g, vector<vector<int>>&paths, vector<int>&path ) {
           path.push_back(v);
-          for (auto u : graph[v]) {
-               calc(u, tar, graph, ans, path);
+          if (v == g.size() - 1) {
+               paths.push_back(path);
           }
+          else {
+               for (auto u : g[v]) {
+                    dfs(u, g, paths, path);
+               }
+          }
+          path.pop_back();
      }
-     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
-          vector<vector<int>>ans;
+     vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& g) {
+          vector<vector<int>>paths;
           vector<int>path;
-          int n = graph.size();
-          calc(0, n - 1, graph, ans, path);
-          return ans;
+          int n = g.size();
+          dfs(0, g, paths, path);
+          return paths;
      }
 };
