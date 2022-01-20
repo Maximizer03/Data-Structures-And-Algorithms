@@ -8,8 +8,7 @@ public:
           }
           path.push_back(v);
           for (auto u : graph[v]) {
-               vector<int>k = path;
-               calc(u, tar, graph, ans, k);
+               calc(u, tar, graph, ans, path);
           }
      }
      vector<vector<int>> allPathsSourceTarget(vector<vector<int>>& graph) {
