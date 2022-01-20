@@ -1,18 +1,18 @@
 class Solution {
 public:
-     int minNumberOperations(vector<int>& h) {
+     int minNumberOperations(vector<int>& height) {
           // dp[i]=> min no of moves to build the blocks till i
-          int n = h.size();
-          vector<int>dp(n);
-          dp[0] = h[0];
+          int n = height.size();
+          int previous_state = height[0], current_state = height[0];
           for (int i = 1; i < n; i++) {
-               if (h[i] <= h[i - 1]) {
-                    dp[i] = dp[i - 1];
+               if (height[i] <= height[i - 1]) {
+                    current_state = previous_state;
                }
                else {
-                    dp[i] = dp[i - 1] + (h[i] - h[i - 1]);
+                    current_state = previous_state + (height[i] - height[i - 1]);
                }
+               previous_state = current_state;
           }
-          return dp[n - 1];
+          return current_state;
      }
 };
