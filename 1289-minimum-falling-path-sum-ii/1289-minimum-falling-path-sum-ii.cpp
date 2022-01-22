@@ -1,24 +1,44 @@
 class Solution {
 public:
-    int minFallingPathSum(vector<vector<int>>& matrix) {
-        int n = matrix.size();
-          vector<vector<int>>dp(n, vector<int>(n, 1e9));
-          for (int i = 0; i < n; i++) {
-               dp[0][i] = matrix[0][i];
+     struct cmp {
+     bool operator()(const pair<int, int>&a, const pair<int, int>&b) {
+          return a.first < b.first;
+     }
+};
+int minFallingPathSum(vector<vector<int>>& matrix) {
+     int n = matrix.size();
+     if (n == 1) {
+          return matrix[0][0];
+     }
+     priority_queue<pair<int, int>, vector<pair<int, int>>, cmp>q;
+     for (int i = 0; i < n; i++) {
+          q.push({matrix[0][i], i});
+          if (q.size() > 2) {
+               q.pop();
           }
-          for (int i = 1; i < n; i++) {
-               for (int j = 0; j < n; j++) {
-                    for (int k = 0; k <= n-1; k++) {
-                         if (k!=j) {
-                              dp[i][j] = min(dp[i][j], matrix[i][j] + dp[i - 1][k]);
-                         }
-                    }
+     }
+
+     for (int i = 1; i < n; i++) {
+          priority_queue<pair<int, int>, vector<pair<int, int>>, cmp>k, r = q;
+          int mn1 = r.top().first, idx1 = r.top().second;
+          r.pop();
+          int mn2 = r.top().first, idx2 = r.top().second;
+          cout << mn1 << " " << mn2 << endl;
+          for (int j = 0; j < n; j++) {
+               if (j == idx2) {
+                    k.push({mn1 + matrix[i][j], j});
+
+               }
+               else {
+                    k.push({mn2 + matrix[i][j], j});
+               }
+               if (k.size() > 2) {
+                    k.pop();
                }
           }
-          int mn = 1e9;
-          for (int i = 0; i < n; i++) {
-               mn = min(mn, dp[n - 1][i]);
-          }
-          return mn;
-    }
+          q = k;
+     }
+     q.pop();
+     return q.top().first;
+}
 };
