@@ -26,7 +26,7 @@ private:
 	vector<int> shortestDistance(vector<vector<pair<int, int>>>&g, int n, int src) {
 		vector<int>dist(n + 1, INT_MAX);
 		dist[src] = 0;
-		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<>>q;
+		priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int,int>>>q;
 		// Entry of pq will be of the form (dist,node)
 		q.push({0, src});
 		while (!q.empty()) {
