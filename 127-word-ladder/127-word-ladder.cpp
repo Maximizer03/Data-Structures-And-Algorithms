@@ -1,6 +1,6 @@
 class Solution {
 public:
-    void addWords(queue<string>&q, set<string>&s, string &w){
+    void addWords(queue<string>&q, unordered_set<string>&s, string &w){
         for(int i=0;i<w.size();i++){
             char c=w[i];
             for(char j='a';j<='z';j++){
@@ -16,7 +16,7 @@ public:
         }
     }
     int ladderLength(string B, string E, vector<string>& list) {
-        set<string>s(begin(list),end(list));
+        unordered_set<string>s(begin(list),end(list));
         if(s.count(E)==0){
             return 0;
         }
