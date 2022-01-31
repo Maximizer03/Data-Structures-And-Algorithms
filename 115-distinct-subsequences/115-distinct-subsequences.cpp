@@ -8,8 +8,7 @@ public:
 				return 1;
 			}
 			if (i == n) {
-				int v = (j >= m);
-				return v;
+				return int(j>=m);
 			}
 			if (dp[i][j] != -1) {
 				return dp[i][j];
