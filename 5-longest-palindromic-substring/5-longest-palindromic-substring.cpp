@@ -34,10 +34,6 @@ public:
 				}
 			}
 		}
-		string ans = "";
-		for (int i = st; i <= en; i++) {
-			ans += s[i];
-		}
-		return ans;
+		return s.substr(st,en-st+1);
 	}
 };
