@@ -4,7 +4,7 @@ public:
 		int n = a.size();
 		map<int, set<int>>m;
 		m[0].insert(1);
-		for (int i = 0; i < n; i++) {
+		for (int i = 0; i < n - 1 ; i++) {
 			for (auto &x : m[a[i]]) {
 				int next = x + a[i];
 				if (binary_search(a.begin(), a.end(), next)) {
