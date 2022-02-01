@@ -7,6 +7,9 @@ public:
 		for (int i = 0; i < n - 1 ; i++) {
 			for (auto &x : m[a[i]]) {
 				int next = x + a[i];
+                if(next==a[n-1]){
+                    return true;
+                }
 				if (binary_search(a.begin(), a.end(), next)) {
 					for (int j = x - 1; j <= x + 1; j++) {
 						if (j > 0) {
