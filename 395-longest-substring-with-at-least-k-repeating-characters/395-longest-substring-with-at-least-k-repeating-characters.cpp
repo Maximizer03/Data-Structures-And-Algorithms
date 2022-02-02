@@ -18,7 +18,7 @@ public:
                 break;
             }
         }
-        if(l>=n-1){
+        if(l>n-1){
            return l;
         }
         string t="";
