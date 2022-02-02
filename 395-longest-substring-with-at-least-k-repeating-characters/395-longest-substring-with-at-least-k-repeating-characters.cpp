@@ -45,8 +45,9 @@ public:
 		}
 		int mx = 0;
 		for (auto &x : a) {
-			mx = max(mx, calc(x, k));
-			if (calc(x, k) == 0) {
+            int val= calc(x,k);
+			mx = max(mx, val);
+			if (val == 0) {
 				mx = max(mx, longestSubstring(x, k));
 			}
 		}
