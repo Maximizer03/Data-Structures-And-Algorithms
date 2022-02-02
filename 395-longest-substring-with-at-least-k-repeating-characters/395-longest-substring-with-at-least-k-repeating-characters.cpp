@@ -1,5 +1,22 @@
 class Solution {
 public:
+    int calc(string s, int k){
+        int n=s.size();
+        if(k>n){
+            return 0;
+        }
+        vector<int>cnt(26,0);
+        for(int i=0;i<n;i++){
+            cnt[s[i]-'a']++;
+        }
+        int flg=1;
+        for(int i=0;i<26;i++){
+            if(cnt[i]>0){
+                flg = (flg & (cnt[i]>=k) );
+            }
+        }
+        return (flg==1)?s.size():0;
+    }
     int longestSubstring(string s, int k) {
         int n=s.size();
         if(k>n){
@@ -9,37 +26,30 @@ public:
         for(int i=0;i<n;i++){
             cnt[s[i]-'a']++;
         }
-        int l=0;
-        while(l<n){
-            if(cnt[s[l]-'a']>=k){
-                l++;
+        int i=0;
+        vector<string>a;
+        string t="";
+        while(i<n){
+            if(cnt[s[i]-'a']>=k){
+                t+=s[i];
+                i++;
             }
             else{
-                break;
+                a.push_back(t);
+                t="";
+                i++;
             }
         }
-        if(l>n-1){
-           return l;
+        if(t.size()){
+            a.push_back(t);
         }
-        string t="";
-        for(int i=0;i<l;i++){
-            t+=s[i];
-        }
-        int a= longestSubstring(t,k);
-        int b=0;
-        while(l<n && cnt[s[l]-'a']<k){
-            l++;
-        }
-        if(l==n){
-            b=0;
-        }
-        else{
-            string r="";
-            for(int i=l;i<n;i++){
-                r+=s[i];
+        int mx=0;
+        for(auto &x:a){
+            mx=max(mx,calc(x,k));
+            if(calc(x,k)==0){
+                mx=max(mx,longestSubstring(x,k));
             }
-            b=longestSubstring(r,k);
         }
-        return max(a,b);
+        return mx;
     }
 };
