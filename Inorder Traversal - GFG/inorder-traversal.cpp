@@ -31,19 +31,32 @@ struct Node {
 
 class Solution {
   public:
-   void order(Node *root, vector<int>&ans){
-       if(root==NULL){
-           return;
-       }
-       order(root->left,ans);
-       ans.push_back(root->data);
-       order(root->right,ans);
-   }
     // Function to return a list containing the inorder traversal of the tree.
     vector<int> inOrder(Node* root) {
-        vector<int>ans;
-        order(root,ans);
-        return ans;
+        vector<int>inorder;
+        Node *cur=root;
+        while(cur!=NULL){
+            if(cur->left!=NULL){
+                Node *child=cur->left;
+                while(child->right!=NULL && child->right!=cur){
+                    child=child->right;
+                }
+                if(child->right==NULL){
+                    child->right=cur;
+                    cur=cur->left;
+                }
+                else{
+                    child->right=NULL;
+                    inorder.push_back(cur->data);
+                    cur=cur->right;
+                }
+            }
+            else{
+                inorder.push_back(cur->data);
+                cur=cur->right;
+            }
+        }
+        return inorder;
     }
 };
 
