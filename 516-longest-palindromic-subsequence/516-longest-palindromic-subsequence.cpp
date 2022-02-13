@@ -23,6 +23,6 @@ public:
     int longestPalindromeSubseq(string s) {
         int n=s.size();
         vector<vector<int>>dp(n,vector<int>(n,-1));
-        return max(1,calc(0,n-1,s,dp));
+        return calc(0,n-1,s,dp);
     }
 };
