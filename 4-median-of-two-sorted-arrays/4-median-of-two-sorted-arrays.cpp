@@ -1,37 +1,37 @@
 class Solution {
 public:
-    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
-        int n=nums1.size();
-        int m=nums2.size();
-        int i=0,j=0;
-        vector<int>arr;
-        while(i<n && j<m){
-            if(nums1[i]<=nums2[j]){
-                arr.push_back(nums1[i]);
-                i++;
-            }
-            else{
-                arr.push_back(nums2[j]);
-                j++;
-            }
-        }
-        while(i<n){
-            arr.push_back(nums1[i]);
-            i++;
-        }
-        while(j<m){
-            arr.push_back(nums2[j]);
-            j++;
-        }
-        if((n+m)%2){
-            double ans= arr[(n+m)/2];
-            return ans;
-        }
-        else{
-            int right= (n+m)/2;
-            int left= right-1;
-            double ans= (arr[left]+arr[left+1])/2.0;
-            return ans;
-        }
-    }
+	double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+		if (nums1.size() > nums2.size()) {
+			swap(nums1, nums2);
+		}
+		int n1 = nums1.size();
+		int n2 = nums2.size();
+		int low = 0, high = n1;
+		while (low <= high) {
+			int mid = (low + high) / 2;
+			int cut1 = mid;
+			int cut2 = (n1 + n2 + 1) / 2 - cut1;
+
+			int l1 = cut1 == 0 ? INT_MIN : nums1[cut1 - 1];
+			int l2 = cut2 == 0 ? INT_MIN : nums2[cut2 - 1];
+			int r1 = cut1 == n1 ? INT_MAX : nums1[cut1];
+			int r2 = cut2 == n2 ? INT_MAX : nums2[cut2];
+
+			if (l1 <= r2 && l2 <= r1) {
+				if ((n1 + n2) % 2 == 0) {
+					return (max(l1, l2) + min(r1, r2)) / 2.0;
+				}
+				else {
+					return (max(l1, l2));
+				}
+			}
+			else if (l1 > r2) {
+				high = mid - 1;
+			}
+			else {
+				low = mid + 1;
+			}
+		}
+		return 0.0;
+	}
 };
