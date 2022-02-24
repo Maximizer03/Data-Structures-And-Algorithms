@@ -37,7 +37,6 @@ public:
 			mx = max(mx, sum);
 			maxi[i] = mx;
 		}
-
 		for (int i = 1; i < m; i++) {
 			mini[i] = min(mini[i], mini[i - 1]);
 		}
