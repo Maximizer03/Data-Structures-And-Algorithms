@@ -17,6 +17,7 @@ struct Node {
 		return flg;
 	}
 };
+
 class WordDictionary {
 private:
 	Node * root;
@@ -35,24 +36,26 @@ public:
 		node->setEnd();
 	}
 	bool calc(string &word, Node* node) {
-        for (int i = 0; word[i] && node; i++) {
-            if (word[i] != '.') {
-                node = node -> links[word[i] - 'a'];
-            } else {
-                Node* tmp = node;
-                for (int j = 0; j < 26; j++) {
-                    node = tmp -> links[j];
-                    string sub=word.substr(i+1);
-                    if (calc(sub,node)) {
-                        return true;
-                    }
-                }
-            }
-        }
-        return node && node->flg;
-    }
+		for (int i = 0; word[i] && node; i++) {
+			if (word[i] != '.') {
+				node = node -> links[word[i] - 'a'];
+			} 
+            else {
+				Node* tmp = node;
+				for (int j = 0; j < 26; j++) {
+					node = tmp -> links[j];
+					string sub = word.substr(i + 1);
+					if (calc(sub, node)) {
+						return true;
+					}
+				}
+                return false;
+			}
+		}
+		return node && node->getEnd();
+	}
 	bool search(string word) {
-        Node * node=root;
-		return calc(word,node);
+		Node * node = root;
+		return calc(word, node);
 	}
 };
