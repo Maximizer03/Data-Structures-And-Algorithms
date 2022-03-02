@@ -46,11 +46,6 @@ int main() {
 // } Driver Code Ends
 
 
-int isEmpty(StackNode *root){
-    return (root==NULL);
-}
-
-
 //Function to push an integer into the stack.
 void MyStack ::push(int x) 
 {
