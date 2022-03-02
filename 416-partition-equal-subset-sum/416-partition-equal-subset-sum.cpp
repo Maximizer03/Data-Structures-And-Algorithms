@@ -1,19 +1,5 @@
 class Solution {
 public:
-    bool calc(int i, int sum, vector<int>&nums,vector<vector<int>>&dp){
-        if(sum<0){
-            return 0;
-        }
-        int n=nums.size();
-        if(i==n){
-            return (sum==0);
-        }
-        if(dp[i][sum]!=-1){
-            return dp[i][sum];
-        }
-        int ans=calc(i+1,sum,nums,dp) | calc(i+1,sum-nums[i],nums,dp);
-        return dp[i][sum]=ans;
-    }
     bool canPartition(vector<int>& nums) {
         long long sum=0;
         int n=nums.size();
@@ -23,7 +9,19 @@ public:
         if(sum%2){
             return false;
         }
-        vector<vector<int>>dp(n,vector<int>(sum+1,-1));
-        return calc(0,sum/2,nums,dp);
+        sum = sum/2;
+        vector<vector<int>>dp(n+1,vector<int>(sum+1,0));
+        dp[0][0]=1;
+        
+        for(int i=1;i<=n;i++){
+            dp[i][0]=1;
+            for(int j=1;j<=sum;j++){
+                dp[i][j]=dp[i-1][j];
+                if(j-nums[i-1]>=0){
+                    dp[i][j]= (dp[i][j]| dp[i-1][j-nums[i-1]]);
+                }
+            }
+        }
+        return dp[n][sum];
     }
 };
