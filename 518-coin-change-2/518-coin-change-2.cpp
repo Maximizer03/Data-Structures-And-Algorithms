@@ -2,18 +2,19 @@ class Solution {
 public:
     int change(int sum, vector<int>& coins) {
         int n=coins.size();
-        vector<vector<int>>dp(n+1,vector<int>(sum+1,0));
-        for(int i=0;i<=n;i++){
-            dp[i][0]=1;
-        }
+        vector<int>prev(sum+1,0);
+        prev[0]=1;
         for(int i=1;i<=n;i++){
+            vector<int>cur(sum+1,0);
+            cur[0]=1;
             for(int j=1;j<=sum;j++){
-                dp[i][j]=dp[i-1][j];
+                cur[j]=prev[j];
                 if(j-coins[i-1]>=0){
-                    dp[i][j]+=dp[i][j-coins[i-1]];
+                    cur[j]+=cur[j-coins[i-1]];
                 }
             }
+            prev=cur;
         }
-        return dp[n][sum];
+        return prev.back();
     }
 };
