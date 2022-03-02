@@ -10,11 +10,12 @@ public:
         }
         int mx=-1e9;
         vector<int>fdp(n);
-        fdp[0]=f0;
-        mx=fdp[0];
+        int prev= f0;
+        mx=prev;
         for(int i=1;i<n;i++){
-            fdp[i]= sum + fdp[i-1] -n*(nums[n-i]);
-            mx=max(mx,fdp[i]);
+            int cur= sum+ prev - n*nums[n-i];
+            mx=max(mx,cur);
+            prev=cur;
         }
         return mx;
     }
