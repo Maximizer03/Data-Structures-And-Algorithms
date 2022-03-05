@@ -15,18 +15,14 @@ public:
 		return ans;
 	}
 	vector<vector<string>> groupAnagrams(vector<string>& strs) {
-		map<string, vector<int>>m;
+		unordered_map<string, vector<string>>m;
 		vector<vector<string>>ans;
 		for (int i = 0; i < strs.size(); i++) {
 			string nw = sorted(strs[i]);
-			m[nw].push_back(i);
+			m[nw].push_back(strs[i]);
 		}
 		for (auto &x : m) {
-			vector<string>v;
-			for (auto &y : x.second) {
-				v.push_back(strs[y]);
-			}
-			ans.push_back(v);
+			ans.push_back(x.second);
 		}
 		return ans;
 	}
