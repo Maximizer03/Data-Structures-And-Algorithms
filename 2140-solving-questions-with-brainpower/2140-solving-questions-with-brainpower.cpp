@@ -1,18 +1,5 @@
 class Solution {
 public:
-    long long calc(int i,vector<int>&p, vector<int>&sk, vector<long long>&dp){
-        int n=p.size();
-        if(i>=n){
-            return 0;
-        }
-        if(dp[i]!=-1){
-            return dp[i];
-        }
-        long long ans=calc(i+1,p,sk,dp);
-        int nxt= i+sk[i]+1;
-        ans=max(ans,calc(nxt,p,sk,dp)+(long long)p[i]);
-        return dp[i]=ans;
-    }
     long long mostPoints(vector<vector<int>>& questions) {
         int n=questions.size();
         vector<int>p(n),sk(n);
@@ -20,8 +7,18 @@ public:
             p[i]=questions[i][0];
             sk[i]=questions[i][1];
         }
-        long long mn=-1;
-        vector<long long>dp(n+1,mn);
-        return calc(0,p,sk,dp);   
+        vector<long long>dp(n,0);
+        dp[n-1]=p[n-1];
+        for(int i=n-2;i>=0;i--){
+            dp[i]=dp[i+1];
+            long long prev=0;
+            if(i+sk[i]+1<n){
+                prev=dp[i+sk[i]+1];
+            }
+            
+            dp[i]=max(dp[i],prev+p[i]);
+            
+        }
+        return dp[0];
     }
 };
