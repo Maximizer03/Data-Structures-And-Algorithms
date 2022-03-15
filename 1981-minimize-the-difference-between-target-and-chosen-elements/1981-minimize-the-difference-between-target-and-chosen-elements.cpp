@@ -19,7 +19,7 @@ public:
             mx=cur_mx;
         }
         int ans=1e9;
-        for(int i=0;i<70*70+1;i++){
+        for(int i=0;i<= mx;i++){
             if(bit[i]==true){
                 ans=min(ans,abs(target-i));
             }
