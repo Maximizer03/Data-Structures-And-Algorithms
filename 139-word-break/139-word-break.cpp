@@ -9,8 +9,9 @@ public:
             return dp[i];
         }
         int ans=0;
+        string t="";
         for(int j=i;j<n;j++){
-            string t=s.substr(i,j-i+1);
+            t+=s[j];
             if(m.find(t)!=m.end()){
                 ans= ans | calc(j+1,s,m,dp);
             }
