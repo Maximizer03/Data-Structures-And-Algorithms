@@ -12,7 +12,7 @@ public:
 					if (dp[j] + 1 == dp[i]) {
 						cnt[i] += cnt[j];
 					}
-					if (dp[j] + 1 > dp[i]) {
+					else if (dp[j] + 1 > dp[i]) {
 						dp[i] = 1 + dp[j];
 						cnt[i] = cnt[j];
 					}
@@ -22,7 +22,7 @@ public:
 			if (dp[i] == l) {
 				f += cnt[i];
 			}
-			if (dp[i] > l) {
+			else if (dp[i] > l) {
 				l = dp[i];
 				f = cnt[i];
 			}
