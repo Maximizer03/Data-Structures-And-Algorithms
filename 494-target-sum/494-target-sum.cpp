@@ -1,15 +1,17 @@
 class Solution {
 public:
-    int findTargetSumWays(vector<int>& nums, int target) {
-        int n=nums.size();
-        vector<unordered_map<int,int>>dp(n+1);
-        dp[0][0]=1;
-        for(int i=1;i<=n;i++){
-            for(auto &x:dp[i-1]){
-                dp[i][x.first+nums[i-1]]+=x.second;
-                dp[i][x.first-nums[i-1]]+=x.second;
-            }
+    int calc(int i, vector<int>&nums,int sum,vector<unordered_map<int,int>>&dp){
+        if(i==nums.size()){
+            return sum==0;
         }
-        return dp[n][target];
+        if(dp[i].find(sum)!=dp[i].end()){
+            return dp[i][sum];
+        }
+        int ans= calc(i+1,nums,sum-nums[i],dp)+calc(i+1,nums,sum+nums[i],dp);
+        return dp[i][sum]=ans;
+    }
+    int findTargetSumWays(vector<int>& nums, int sum) {
+        vector<unordered_map<int,int>>dp(nums.size());
+        return calc(0,nums,sum,dp);
     }
 };
