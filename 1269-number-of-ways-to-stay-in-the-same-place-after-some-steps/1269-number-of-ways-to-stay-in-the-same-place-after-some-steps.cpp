@@ -3,7 +3,7 @@ public:
 	int dp[505][505];
 	int mod = 1e9 + 7;
 	int calc(int i, int n, int k, int mx) {
-		if (i > mx) {
+		if (i > (mx+1)/2) {
 			return 0;
 		}
 		if (k == 0) {
