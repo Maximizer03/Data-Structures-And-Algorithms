@@ -7,15 +7,18 @@ public:
 		q.push({grid[0][0], {0, 0}});
 		vector<int>dx = {1, -1, 0, 0};
 		vector<int>dy = {0, 0, 1, -1};
-		vector<vector<bool>>vis(n, vector<bool>(n, false));
-        vis[0][0]=1;
+		vector<vector<int>>dist(n, vector<int>(n, 1e9));
+		dist[0][0] = grid[0][0];
 		while (!q.empty()) {
-			int dist = q.top().first;
+			int D = q.top().first;
 			int x = q.top().second.first;
 			int y = q.top().second.second;
 			q.pop();
+			if (D > dist[x][y]) {
+				continue;
+			}
 			if (x == n - 1 && y == n - 1) {
-				return dist;
+				return D;
 			}
 			for (int k = 0; k < 4; k++) {
 				int xx = x + dx[k];
@@ -23,10 +26,10 @@ public:
 				if (xx < 0 || yy < 0 || xx >= n || yy >= n) {
 					continue;
 				}
-				int mx = max(dist, grid[xx][yy]);
-				if (vis[xx][yy]==false) {
+				int mx = max(D, grid[xx][yy]);
+				if (mx < dist[xx][yy]) {
 					q.push({mx, {xx, yy}});
-                    vis[xx][yy]=1;
+					dist[xx][yy] = mx;
 				}
 			}
 		}
