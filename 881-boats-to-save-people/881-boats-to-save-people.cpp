@@ -4,11 +4,6 @@ public:
 		int n = P.size();
 		sort(begin(P), end(P));
 		int ans = 0;
-		while (P.back() == L) {
-			ans++;
-			P.pop_back();
-		}
-		n = P.size();
 		int l = 0, r = n - 1;
 		while (l < r) {
 			int sum = P[l] + P[r];
