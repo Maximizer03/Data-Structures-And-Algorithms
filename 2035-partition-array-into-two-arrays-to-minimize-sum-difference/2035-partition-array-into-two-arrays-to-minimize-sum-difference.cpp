@@ -57,12 +57,6 @@ public:
 					summ = cur + a2[n - i][l];
 					rem = sum - summ;
 					ans = min(ans, abs(summ - rem));
-					if (l + 2 < a2[n - i].size()) {
-						l += 2;
-					}
-					summ = cur + a2[n - i][l];
-					rem = sum - summ;
-					ans = min(ans, abs(summ - rem));
 			}
 		}
 		return ans;
