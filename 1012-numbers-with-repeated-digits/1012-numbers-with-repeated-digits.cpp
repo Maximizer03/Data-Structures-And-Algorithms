@@ -8,14 +8,13 @@ public:
 		if (dp[i][tight][lead][mask] != -1) {
 			return dp[i][tight][lead][mask];
 		}
-		int ub = tight ? num[i] - '0' : 9;
+		int no = num[i] - '0';
+		int ub = tight ? no : 9;
 		int ans = 0;
 		if (!lead) {
-			int bit = (1 << 0)&mask;
+			int bit = mask & 1;
 			if (bit == 0) {
-				int no = num[i] - '0';
-				int z = 0;
-				ans += calc(i + 1, n, (tight & (no == z)), 0, (mask | (1 << 0)), num);
+				ans += calc(i + 1, n, (tight & (no == 0)), 0, (mask | 1), num);
 			}
 		}
 		else {
@@ -24,7 +23,6 @@ public:
 		for (int dig = 1; dig <= ub; dig++) {
 			int bit = (1 << dig)&mask;
 			if (bit == 0) {
-				int no = num[i] - '0';
 				ans += calc(i + 1, n, ((tight) & (no == dig)), 0, (mask | (1 << dig)), num);
 			}
 		}
