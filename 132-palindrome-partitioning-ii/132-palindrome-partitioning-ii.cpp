@@ -1,37 +1,40 @@
 class Solution {
 public:
-	bool isPalindrome(string &s) {
-		int l = 0, r = s.size() - 1;
-		while (l <= r) {
-			if (s[l] == s[r]) {
-				l++; r--;
-			}
-			else {
-				return 0;
-			}
-		}
-		return 1;
-	}
-	int calc(int i, string &s, int n, vector<int>&dp) {
-		if (i == n) {
+	int dfs(int l, int r, string &s, vector<vector<int>>&A) {
+		if (l > r) {
 			return 0;
 		}
-		if (dp[i] != -1) {
-			return dp[i];
+		if (l == r) {
+			return 1;
 		}
-		int ans = INT_MAX;
-		string temp = "";
-		for (int j = i; j < n; j++) {
-			temp += s[j];
-			if (isPalindrome(temp)) {
-				ans = min(ans, 1 + calc(j + 1, s, n, dp));
-			}
+		if (l + 1 == r) {
+			return (s[l] == s[r]);
 		}
-		return dp[i] = ans;
+		if (A[l][r] != -1) {
+			return A[l][r];
+		}
+		int ans = (s[l] == s[r] && dfs(l + 1, r - 1, s, A));
+		return A[l][r] = ans;
 	}
 	int minCut(string s) {
 		int n = s.size();
-		vector<int>dp(n, -1);
-		return calc(0, s, n, dp) - 1;
+		vector<vector<int>>A(n, vector<int>(n, -1));
+		for (int i = 0; i < n; i++) {
+			for (int j = 0; j < n; j++) {
+				A[i][j] = dfs(i, j, s, A);
+			}
+		}
+		vector<int>dp(n + 1);
+		dp[n] = 0;
+		for (int i = n - 1; i >= 0; i--) {
+			int ans = INT_MAX;
+			for (int j = i; j < n; j++) {
+				if (A[i][j] > 0) {
+					ans = min(ans, 1 + dp[j + 1]);
+				}
+			}
+			dp[i] = ans;
+		}
+		return dp[0] - 1;
 	}
 };
