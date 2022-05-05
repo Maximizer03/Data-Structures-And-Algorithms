@@ -1,28 +1,27 @@
 class Solution {
 public:
-	long long dp[100005][2][3];
-	long long calc(int i, int b, int k, vector<int>&p) {
-		if (i == p.size()) {
-			return 0;
-		}
-		if (dp[i][b][k] != -1) {
-			return dp[i][b][k];
-		}
-		long long ans = 0;
-		if (!b) {
-			ans = calc(i + 1, b, k, p);
-			ans = max(ans, calc(i + 1, 1, k, p) - p[i]);
-		}
-		else {
-			ans = calc(i + 1, b, k, p);
-			if (k > 0) {
-				ans = max(ans, calc(i + 1, 0, k - 1, p) + p[i]);
+	int maxProfit(vector<int>& p) {
+		int n = p.size();
+		long long dp[n + 1][2][3];
+		memset(dp, 0, sizeof(dp));
+		for (int i = n - 1; i >= 0; i--) {
+			for (int b = 0; b <= 1; b++) {
+				for (int k = 0; k <= 2; k++) {
+					long long ans = 0;
+					if (!b) {
+						ans = dp[i + 1][b][k];
+						ans = max(ans, dp[i + 1][1][k] - p[i]);
+					}
+					else {
+						ans = dp[i + 1][b][k];
+						if (k > 0) {
+							ans = max(ans, dp[i + 1][0][k - 1] + p[i]);
+						}
+					}
+					dp[i][b][k] = ans;
+				}
 			}
 		}
-		return dp[i][b][k] = ans;
-	}
-	int maxProfit(vector<int>& p) {
-		memset(dp, -1, sizeof(dp));
-		return calc(0, 0, 2, p);
+		return dp[0][0][2];
 	}
 };
