@@ -1,25 +1,22 @@
 class Solution {
 public:
-    int dp[30005][2];
-    int calc(vector<int>&prices,int i, int cnt){
-        int n=prices.size();
-        if(i>=n){
-            return 0;
-        }
-        if(dp[i][cnt]!=-1){
-            return dp[i][cnt];
-        }
-        int ans=0;
-        if(cnt==0){
-            ans=max(calc(prices,i+1,0),calc(prices,i+1,1)-prices[i]);
-        }
-        else{
-            ans=max(calc(prices,i+1,1),calc(prices,i+1,0)+prices[i]);
-        }
-        return dp[i][cnt]=ans;
-    }
-    int maxProfit(vector<int>& prices) {
-        memset(dp,-1,sizeof(dp));
-        return calc(prices,0,0);
-    }
+	int maxProfit(vector<int>& prices) {
+		int n = prices.size();
+		vector<int>prev(2, 0), cur(2, 0);
+		prev[0] = prev[1] = 0;
+		for (int i = n - 1; i >= 0; i--) {
+			for (int cnt = 0; cnt <= 1; cnt++) {
+				int ans = 0;
+				if (cnt == 0) {
+					ans = max(prev[0], prev[1] - prices[i]);
+				}
+				else {
+					ans = max(prev[1], prev[0] + prices[i]);
+				}
+				cur[cnt] = ans;
+			}
+			swap(cur, prev);
+		}
+		return prev[0];
+	}
 };
