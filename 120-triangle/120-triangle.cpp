@@ -1,22 +1,21 @@
 class Solution {
 public:
-	int dp[205][205];
-	int calc(int i, int j, vector<vector<int>>& triangle) {
-		int n = triangle.size();
-		if (j > i) {
-			return 1e5;
-		}
-		if (i == n - 1) {
-			return triangle[i][j];
-		}
-		if (dp[i][j] != -1) {
-			return dp[i][j];
-		}
-		int ans = triangle[i][j] + min(calc(i + 1, j, triangle), calc(i + 1, j + 1, triangle));
-		return dp[i][j]=ans;
-	}
 	int minimumTotal(vector<vector<int>>& triangle) {
-		memset(dp, -1, sizeof(dp));
-		return calc(0, 0, triangle);
+		int n = triangle.size();
+		vector<vector<int>>dp(n, vector<int>(n));
+		vector<int>prev(n), cur(n);
+		for (int i = 0; i < n; i++) {
+			prev[i] = triangle[n - 1][i];
+		}
+		for (int i = n - 2; i >= 0; i--) {
+			for (int j = 0; j <= i; j++) {
+				int op1 = prev[j];
+				int op2 = (j + 1) ? prev[j + 1] : 1e8;
+				int ans = triangle[i][j] + min(op1, op2);
+				cur[j] = ans;
+			}
+			swap(prev, cur);
+		}
+		return prev[0];
 	}
 };
