@@ -2,7 +2,7 @@ class Solution {
 public:
 	vector<vector<int>> combine(int n, int k) {
 		vector<vector<int>>ans;
-		unordered_map<int, int>m;
+		map<int, int>m;
 		for (int i = 0; i < (1 << n); i++) {
 			int cnt = 0;
 			vector<int>v;
