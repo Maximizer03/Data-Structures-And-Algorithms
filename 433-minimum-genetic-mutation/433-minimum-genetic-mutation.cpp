@@ -27,12 +27,13 @@ public:
 					for (int k = 1; k <= 4; k++) {
 						if (k != idx) {
 							char nw = num[k];
-							string t = cur;
-							t[j] = nw;
-							if (used.find(t) == used.end() && pos.find(t) != pos.end()) {
-								q.push(t);
-								used.insert(t);
+							cur[j] = nw;
+							if (used.find(cur) == used.end() && pos.find(cur) != pos.end()) {
+								q.push(cur);
+								used.insert(cur);
 							}
+							char org = num[idx];
+							cur[j] = org;
 						}
 					}
 				}
