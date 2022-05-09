@@ -1,35 +1,37 @@
 class Solution {
 public:
-    vector<int>dx = {1, -1, 0, 0}, dy = {0, 0, 1, -1};
-    string w;
-	bool calc(int i, int j, int p, vector<vector<char>>& A, string &w) {
-		int n = A.size(), m = A[0].size();
-		if (i < 0 || j < 0 || i >= n || j >= m || A[i][j] != w[p]) {
-			return false;
+	int ans;
+    vector<int>dx = {1, -1, 0, 0};
+	vector<int>dy = {0, 0, 1, -1};
+	void dfs(int i, int j, int pos, vector<vector<int>>&vis, vector<vector<char>>&board, string &word) {
+		if (pos == word.size() - 1) {
+			ans = 1;
 		}
-		if (p == w.size()-1) {
-			return true;
-		}
-		char c = A[i][j];
-		A[i][j] = '0';
+		int n = board.size(), m = board[0].size();
+		
 		for (int k = 0; k < 4; k++) {
-			if (calc(i + dx[k], j + dy[k], p + 1, A, w)) {
-				return true;
+			int nx = i + dx[k];
+			int ny = j + dy[k];
+			if (nx >= 0 && nx < n && ny >= 0 && ny < m && board[nx][ny] == word[pos + 1] && vis[nx][ny] == 0) {
+				vis[nx][ny] = 1;
+				dfs(nx, ny, pos + 1, vis, board, word);
+				vis[nx][ny] = 0;
 			}
 		}
-		A[i][j] = c;
-		return false;
 	}
-	bool exist(vector<vector<char>>& A, string word) {
-        w=word;
-		int n = A.size(), m = A[0].size();
+	bool exist(vector<vector<char>>& board, string word) {
+		ans = 0;
+		int n = board.size(), m = board[0].size();
+		vector<vector<int>>vis(n, vector<int>(m, 0));
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
-				if (calc(i, j, 0, A, w)) {
-					return true;
+				if (board[i][j] == word[0]) {
+					vis[i][j] = 1;
+					dfs(i, j, 0, vis, board, word);
+					vis[i][j] = 0;
 				}
 			}
 		}
-		return false;
+		return (ans > 0);
 	}
 };
