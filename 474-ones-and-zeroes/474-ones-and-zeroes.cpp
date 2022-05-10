@@ -1,22 +1,5 @@
 class Solution {
 public:
-	int dp[605][102][102];
-	int N, M;
-	// n 0's and m 1's
-	// x 0's and y 1's
-	int calc(int i, int x, int y, vector<vector<int>>&cnt) {
-		if (i == cnt.size()) {
-			return 1;
-		}
-        if(dp[i][x][y]!=-1){
-            return dp[i][x][y];
-        }
-		int ans = calc(i + 1, x, y, cnt);
-		if (cnt[i][0] + x <= N && cnt[i][1] + y <= M) {
-			ans = max(ans, calc(i + 1, cnt[i][0] + x, cnt[i][1] + y, cnt) + 1);
-		}
-		return dp[i][x][y]=ans;
-	}
 	int findMaxForm(vector<string>& strs, int n, int m) {
 		int s = strs.size();
 		vector<vector<int>>cnt(s, vector<int>(2, 0));
@@ -26,8 +9,24 @@ public:
 				cnt[i][(t[j] - '0')]++;
 			}
 		}
-		N = n, M = m;
-        memset(dp,-1,sizeof(dp));
-		return calc(0, 0, 0, cnt)-1;
+		int dp[s + 1][n + 1][m + 1];
+		memset(dp, 0, sizeof(dp));
+		for (int i = 0; i <= n; i++) {
+			for (int j = 0; j <= m; j++) {
+				dp[s][i][j] = 1;
+			}
+		}
+		for (int i = s - 1; i >= 0; i--) {
+			for (int x = 0; x <= n; x++) {
+				for (int y = 0; y <= m; y++) {
+					int ans = dp[i + 1][x][y];
+					if (cnt[i][0] + x <= n && cnt[i][1] + y <= m) {
+						ans = max(ans,  dp[i + 1][cnt[i][0] + x][cnt[i][1] + y] + 1);
+					}
+					dp[i][x][y] = ans;
+				}
+			}
+		}
+		return dp[0][0][0] - 1;
 	}
 };
