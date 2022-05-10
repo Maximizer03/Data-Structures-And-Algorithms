@@ -1,6 +1,6 @@
 class Solution {
 public:
-	bool dfs(int v, int p, vector<int>&vis, vector<set<int>>&g) {
+	bool dfs(int v, int p, vector<int>&vis, vector<unordered_set<int>>&g) {
 		vis[v] = 1;
 		for (auto &u : g[v]) {
 			if (vis[u] == 0) {
@@ -17,7 +17,7 @@ public:
 	bool containsCycle(vector<vector<char>>& grid) {
 		int n = grid.size(), m = grid[0].size();
 		vector<int>dx = {1, -1, 0, 0}, dy = {0, 0, 1, -1};
-		vector<set<int>>g(n * m);
+		vector<unordered_set<int>>g(n * m);
 		for (int i = 0; i < n; i++) {
 			for (int j = 0; j < m; j++) {
 				for (int k = 0; k < 4; k++) {
