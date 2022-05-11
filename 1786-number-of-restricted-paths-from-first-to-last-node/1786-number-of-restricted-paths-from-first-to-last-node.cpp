@@ -12,6 +12,9 @@ public:
 		// (dist,src)
 		q.push({0, src});
 		vector<long long>dist(n + 1, 1e12);
+		long long mod = 1e9 + 7;
+		vector<long long>dp(n + 1, 0);
+		dp[n] = 1;
 		dist[src] = 0;
 		while (!q.empty()) {
 			long long cost = q.top().first;
@@ -24,26 +27,6 @@ public:
 				if (dist[v] + w < dist[u]) {
 					dist[u] = dist[v] + w;
 					q.push({dist[u], u});
-				}
-			}
-		}
-		long long mod = 1e9 + 7;
-		vector<long long>dp(n + 1, 0);
-		dp[n] = 1;
-		q.push({0, src});
-		vector<long long>dd(n + 1, 1e12);
-		dd[src] = 0;
-		while (!q.empty()) {
-			long long cost = q.top().first;
-			long long v = q.top().second;
-			q.pop();
-			if (cost > dd[v]) {
-				continue;
-			}
-			for (auto &[u, w] : g[v]) {
-				if (dd[v] + w < dd[u]) {
-					dd[u] = dd[v] + w;
-					q.push({dd[u], u});
 				}
 				if (dist[u] > dist[v]) {
 					dp[u] = (dp[u] % mod + dp[v] % mod) % mod;
