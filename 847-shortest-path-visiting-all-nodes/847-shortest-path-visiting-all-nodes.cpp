@@ -1,14 +1,12 @@
 class Solution {
 public:
-	int shortestPathLength(vector<vector<int>>& g) {
+	int get(int v, vector<vector<int>>&g) {
 		int n = g.size();
 		set<pair<int, int>>s;
 		queue<pair<int, int>>q;
-		for (int i = 0; i < n; i++) {
-			int mask = (1 << i);
-			q.push({i, mask});
-			s.insert({i, mask});
-		}
+		int mask = (1 << v);
+		q.push({v, mask});
+		s.insert({v, mask});
 		int cnt = 0;
 		while (q.size() > 0) {
 			int si = q.size();
@@ -30,5 +28,13 @@ public:
 			cnt++;
 		}
 		return -1;
+	}
+	int shortestPathLength(vector<vector<int>>& g) {
+		int n = g.size();
+		int ans = 1e9;
+		for (int i = 0; i < n; i++) {
+			ans = min(ans, get(i, g));
+		}
+		return ans;
 	}
 };
