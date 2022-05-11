@@ -1,12 +1,15 @@
 class Solution {
 public:
-	int get(int v, vector<vector<int>>&g) {
+	int shortestPathLength(vector<vector<int>>& g) {
 		int n = g.size();
-		set<pair<int, int>>s;
+        bool s[13][(1<<13)];
+        memset(s,false,sizeof(s));
 		queue<pair<int, int>>q;
-		int mask = (1 << v);
-		q.push({v, mask});
-		s.insert({v, mask});
+		for (int i = 0; i < n; i++) {
+			int mask = (1 << i);
+			q.push({i, mask});
+            s[i][mask]=true;
+		}
 		int cnt = 0;
 		while (q.size() > 0) {
 			int si = q.size();
@@ -19,22 +22,14 @@ public:
 				q.pop();
 				for (auto &u : g[v]) {
 					int new_mask =  mask | (1 << u);
-					if (s.find({u, new_mask}) == s.end()) {
+					if (s[u][new_mask]==false) {
 						q.push({u, new_mask});
-						s.insert({u, new_mask});
+                        s[u][new_mask]=true;
 					}
 				}
 			}
 			cnt++;
 		}
 		return -1;
-	}
-	int shortestPathLength(vector<vector<int>>& g) {
-		int n = g.size();
-		int ans = 1e9;
-		for (int i = 0; i < n; i++) {
-			ans = min(ans, get(i, g));
-		}
-		return ans;
 	}
 };
