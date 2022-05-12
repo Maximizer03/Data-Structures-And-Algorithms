@@ -21,12 +21,21 @@ public:
 			t.pop_back();
 			string r = t + k;
 			if (l.size()) {
-				v.push_back(stoi(l));
+				int num = stoi(l);
+				if (num > 2 && num % 2 == 0) {
+					continue;
+				}
+				v.push_back(num);
 			}
 			if (r.size()) {
-				v.push_back(stoi(r));
+				int num = stoi(r);
+				if (num > 2 && num % 2 == 0) {
+					continue;
+				}
+				v.push_back(num);
 			}
 		}
+        v.push_back(2);
 		sort(begin(v), end(v));
 		int l = lower_bound(begin(v), end(v), n) - v.begin();
 		for (int i = l; i < v.size(); i++) {
