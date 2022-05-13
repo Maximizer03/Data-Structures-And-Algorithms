@@ -104,6 +104,9 @@ public:
 		int len = 0;
 		int n = s.size();
 		for (int i = 0; i < n - 1; i++) {
+            if(i+1<len){
+                continue;
+            }
 			if (gethash(0, i) == gethash(n - i - 1, n - 1) && gethash2(0, i) == gethash2(n - i - 1, n - 1)) {
 				if (i + 1 > len) {
 					len = i + 1;
