@@ -1,40 +1,52 @@
 class Solution {
 public:
-    void addWords(queue<string>&q, unordered_set<string>&s, string &w){
-        for(int i=0;i<w.size();i++){
-            char c=w[i];
-            for(char j='a';j<='z';j++){
-                w[i]=j;
-                if(w[i]!=c){
-                    if(s.count(w)){
-                        q.push(w);
-                        s.erase(w);
-                    }
-                }
-            }
-            w[i]=c;
-        }
-    }
-    int ladderLength(string B, string E, vector<string>& list) {
-        unordered_set<string>s(begin(list),end(list));
-        if(s.count(E)==0){
-            return 0;
-        }
-        queue<string>q;
-        q.push(B);
-        int ans=1;
-        while(!q.empty()){
-            int cnt=q.size();
-            while(cnt--){
-                string w=q.front();
-                q.pop();
-                if(w==E){
-                    return ans;
-                }
-                addWords(q,s,w);
-            }
-            ans++;
-        }
-        return 0;
-    }
+	int ladderLength(string B, string E, vector<string>& words) {
+		set<string>s;
+		map<string, int>vis, dist;
+		map<string, set<string>>par, g;
+		for (string k : words) {
+			s.insert(k);
+		}
+		s.insert(B);
+		for (auto &x : s) {
+			string cur = x;
+			for (int i = 0; i < cur.size(); i++) {
+				char org = cur[i];
+				for (char ch = 'a'; ch <= 'z'; ch++) {
+					if (ch == org) {
+						continue;
+					}
+					cur[i] = ch;
+					if (s.find(cur) != s.end()) {
+						g[x].insert(cur);
+					}
+					cur[i] = org;
+				}
+			}
+		}
+		queue<string>q;
+		par[B].insert("*");
+		vis[B] = 1;
+		q.push(B);
+		dist[B] = 1;
+		while (!q.empty()) {
+			string v = q.front();
+			q.pop();
+			if (v == E) {
+				return dist[v];
+			}
+			for (auto &u : g[v]) {
+				if (!vis.count(u)) {
+					par[u].insert(v);
+					vis[u] = 1;
+					dist[u] = dist[v] + 1;
+					q.push(u);
+				}
+				else if (dist[u] == dist[v] + 1) {
+					par[u].insert(v);
+				}
+			}
+		}
+		return dist[E];
+	}
 };
