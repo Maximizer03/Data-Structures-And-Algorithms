@@ -40,10 +40,7 @@ public:
 	vector<vector<string>> solveNQueens(int n) {
 		vector<vector<string>>res;
 		vector<string>cur;
-		string t = "";
-		for (int i = 0; i < n; i++) {
-			t += '.';
-		}
+		string t = string(n,'.');
 		for (int i = 0; i < n; i++) {
 			cur.push_back(t);
 		}
