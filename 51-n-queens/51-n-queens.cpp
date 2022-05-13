@@ -24,7 +24,7 @@ public:
 		}
 		return true;
 	}
-	void solve(int col, int n, vector<string>cur, vector<vector<string>>&res) {
+	void solve(int col, int n, vector<string>&cur, vector<vector<string>>&res) {
 		if (col == n) {
 			res.push_back(cur);
 			return;
