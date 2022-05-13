@@ -30,11 +30,11 @@ public:
 			return;
 		}
 		for (int row = 0; row < n; row++) {
-			cur[row][col] = 'Q';
 			if (isValid(row, col, cur, n)) {
+                cur[row][col] = 'Q';
 				solve(col + 1, n, cur, res);
+                cur[row][col] = '.';
 			}
-			cur[row][col] = '.';
 		}
 	}
 	vector<vector<string>> solveNQueens(int n) {
