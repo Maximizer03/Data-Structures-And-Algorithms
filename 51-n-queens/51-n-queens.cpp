@@ -39,11 +39,8 @@ public:
 	}
 	vector<vector<string>> solveNQueens(int n) {
 		vector<vector<string>>res;
-		vector<string>cur;
-		string t = string(n,'.');
-		for (int i = 0; i < n; i++) {
-			cur.push_back(t);
-		}
+        string t = string(n,'.');
+		vector<string>cur(n,t);
 		solve(0, n, cur, res);
 		return res;
 	}
