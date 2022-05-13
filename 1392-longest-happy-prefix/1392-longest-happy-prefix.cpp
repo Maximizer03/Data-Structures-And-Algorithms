@@ -99,18 +99,12 @@ public:
 		N = s.size();
 		pw.resize(N), hash.resize(N), inv.resize(N);
 		pw2.resize(N), hash2.resize(N), inv2.resize(N);
-		precalc();
-		build(s);
-		precalc2();
-		build2(s);
+		precalc();precalc2();
+		build(s);build2(s);
 		int len = 0;
 		int n = s.size();
 		for (int i = 0; i < n - 1; i++) {
-			int h1 = gethash(0, i);
-			int h2 = gethash2(0, i);
-			int h3 = gethash(n - i - 1, n - 1);
-			int h4 = gethash2(n - i - 1, n - 1);
-			if (h1 == h3 && h2 == h4) {
+			if (gethash(0, i) == gethash(n - i - 1, n - 1) && gethash2(0, i) == gethash2(n - i - 1, n - 1)) {
 				if (i + 1 > len) {
 					len = i + 1;
 				}
