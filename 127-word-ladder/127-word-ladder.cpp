@@ -1,9 +1,9 @@
 class Solution {
 public:
 	int ladderLength(string B, string E, vector<string>& words) {
-		set<string>s;
-		map<string, int>vis, dist;
-		map<string, set<string>>par, g;
+		unordered_set<string>s;
+		unordered_map<string, int>vis, dist;
+		unordered_map<string, set<string>>par, g;
 		for (string k : words) {
 			s.insert(k);
 		}
