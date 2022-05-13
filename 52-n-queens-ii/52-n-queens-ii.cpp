@@ -1,49 +1,27 @@
 class Solution {
 public:
-	int cnt;
-	bool isValid(int row, int col, vector<string>&cur, int n) {
-		int r = row - 1, c = col - 1;
-		while (r >= 0 && c >= 0) {
-			if (cur[r][c] == 'Q') {
-				return false;
-			}
-			r--; c--;
-		}
-		r = row, c = col - 1;
-		while (r >= 0 && c >= 0) {
-			if (cur[r][c] == 'Q') {
-				return false;
-			}
-			c--;
-		}
-		r = row + 1, c = col - 1;
-		while (r >= 0 && r < n && c >= 0) {
-			if (cur[r][c] == 'Q') {
-				return false;
-			}
-			r++; c--;
-		}
-		return true;
-	}
-	void solve(int col, int n, vector<string>&cur) {
+    int cnt;
+	void solve(int col, int n, vector<string>&cur, vector<int>&LR, vector<int>&LD, vector<int>&UD) {
 		if (col == n) {
 			cnt++;
 			return;
 		}
 		for (int row = 0; row < n; row++) {
-			if (isValid(row, col, cur, n)) {
+			if (LR[row] == 0 && LD[row + col] == 0 && UD[n - 1 + col - row] == 0) {
 				cur[row][col] = 'Q';
-				solve(col + 1, n, cur);
+				LR[row] = 1 ,LD[row + col] = 1 ,UD[n - 1 + col - row] = 1;
+				solve(col + 1, n, cur,  LR, LD, UD);
+				LR[row] = 0 ,LD[row + col] = 0 ,UD[n - 1 + col - row] = 0;
 				cur[row][col] = '.';
 			}
-		}
-	}
+        }
+    }
 	int totalNQueens(int n) {
-		vector<vector<string>>res;
-		cnt = 0;
 		string t = string(n, '.');
 		vector<string>cur(n, t);
-		solve(0, n, cur);
+        cnt=0;
+        vector<int>LR(n),LD(2*n),UD(2*n);
+		solve(0, n, cur,LR,LD,UD);
 		return cnt;
 	}
 };
