@@ -16,19 +16,7 @@ public:
 		while (!st.empty()) {
 			st.pop_back();
 		}
-		for (int i = n - 1; i >= 0; i--) {
-			while (!st.empty() && a[st.back()] >= a[i]) {
-				st.pop_back();
-			}
-			if (!st.empty()) {
-				nsr[i] = st.back();
-			}
-			st.push_back(i);
-		}
-		while (!st.empty()) {
-			st.pop_back();
-		}
-		for (int i = 0; i < n; i++) {
+        for (int i = 0; i < n; i++) {
 			while (!st.empty() && a[st.back()] < a[i]) {
 				st.pop_back();
 			}
@@ -41,6 +29,19 @@ public:
 		while (!st.empty()) {
 			st.pop_back();
 		}
+		for (int i = n - 1; i >= 0; i--) {
+			while (!st.empty() && a[st.back()] >= a[i]) {
+				st.pop_back();
+			}
+			if (!st.empty()) {
+				nsr[i] = st.back();
+			}
+			st.push_back(i);
+		}
+		while (!st.empty()) {
+			st.pop_back();
+		}
+		
 		for (int i = 0; i < n; i++) {
 			while (!st.empty() && a[st.back()] > a[i]) {
 				st.pop_back();
