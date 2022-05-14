@@ -4,7 +4,7 @@ public:
 		int n = a.size();
 		vector<int>ngr(n, n), nsr(n, n), ngl(n, -1), nsl(n, -1), st;
 		for (int i = n - 1; i >= 0; i--) {
-			while (!st.empty() && a[st.back()] < a[i]) {
+			while (!st.empty() && a[st.back()] <= a[i]) {
 				st.pop_back();
 			}
 			if (!st.empty()) {
@@ -17,7 +17,7 @@ public:
 			st.pop_back();
 		}
 		for (int i = n - 1; i >= 0; i--) {
-			while (!st.empty() && a[st.back()] > a[i]) {
+			while (!st.empty() && a[st.back()] >= a[i]) {
 				st.pop_back();
 			}
 			if (!st.empty()) {
@@ -29,7 +29,7 @@ public:
 			st.pop_back();
 		}
 		for (int i = 0; i < n; i++) {
-			while (!st.empty() && a[st.back()] <= a[i]) {
+			while (!st.empty() && a[st.back()] < a[i]) {
 				st.pop_back();
 			}
 			if (!st.empty()) {
@@ -42,7 +42,7 @@ public:
 			st.pop_back();
 		}
 		for (int i = 0; i < n; i++) {
-			while (!st.empty() && a[st.back()] >= a[i]) {
+			while (!st.empty() && a[st.back()] > a[i]) {
 				st.pop_back();
 			}
 			if (!st.empty()) {
