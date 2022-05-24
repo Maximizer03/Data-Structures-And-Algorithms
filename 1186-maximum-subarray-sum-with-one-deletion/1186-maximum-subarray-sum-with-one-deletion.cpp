@@ -15,16 +15,13 @@ public:
 		// either max subarray ending at posn i
 		// either max subarray starting at pos i
 		// either leaving the ith element and taking max subarray ending at pos i-1 and max sub starting at i+1
-        
+
 		for (int i = 0; i < n; i++) {
-			vector<int>v;
-			v.push_back(p[i]);
-			v.push_back(s[i]);
+			int mx = max(p[i], s[i]);
 			if (i > 0 && i + 1 < n) {
-				v.push_back(p[i - 1] + s[i + 1]);
+				mx = max(mx, p[i - 1] + s[i + 1]);
 			}
-			sort(begin(v), end(v));
-			ans = max(ans, v.back());
+			ans = max(ans, mx);
 		}
 		return ans;
 	}
