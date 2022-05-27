@@ -1,30 +1,64 @@
 class Solution {
 public:
-	int dp[5005][4][4][4];
-	int calc(int r, int c1, int c2, int c3, int n) {
-		if (r == n) {
+	string t;
+	long long mod,dp[12][5005];
+	void calci(int i, char cur, string &s, vector<string>&res) {
+		if (i == 3) {
+			res.push_back(s);
+			return;
+		}
+		for (int j = 0; j < 3; j++) {
+			if (t[j] != cur) {
+				s += t[j];
+				calci(i + 1, t[j], s, res);
+				s.pop_back();
+			}
+		}
+	}
+	long long calc(int v, int row, vector<vector<int>>&g, int n) {
+		if (row == n - 1) {
 			return 1;
 		}
-		if (dp[r][c1][c2][c3] != -1) {
-			return dp[r][c1][c2][c3];
+		if (dp[v][row] != -1) {
+			return dp[v][row];
 		}
-		int mod = 1e9 + 7;
 		long long ans = 0;
-		for (int i = 1; i <= 3; i++) {
-			for (int j = 1; j <= 3; j++) {
-				for (int k = 1; k <= 3; k++) {
-					if (i != j && j != k) {
-						if (i != c1 && j != c2 && k != c3) {
-							ans = (ans % mod + calc(r + 1, i, j, k, n) % mod) % mod;
-						}
-					}
+		for (auto &u : g[v]) {
+			ans = (ans % mod + calc(u, row + 1, g, n) % mod) % mod;
+		}
+		return dp[v][row] = ans;
+	}
+	bool chk(string &s, string &t) {
+		int n = s.size();
+		for (int i = 0; i < n; i++) {
+			if (s[i] == t[i]) {
+				return false;
+			}
+		}
+		return true;
+	}
+	int numOfWays(int n) {
+		t = "RGY";
+		string s = "";
+		char cur = '*';
+		vector<string>res;
+		calci(0, cur, s, res);
+		int x = res.size();
+		mod = 1e9 + 7;
+		vector<vector<int>>g(x + 1);
+		for (int i = 0; i < x; i++) {
+			for (int j = i + 1; j < x; j++) {
+				if (chk(res[i], res[j])) {
+					g[i].push_back(j);
+					g[j].push_back(i);
 				}
 			}
 		}
-		return dp[r][c1][c2][c3] = ans;
-	}
-	int numOfWays(int n) {
 		memset(dp, -1, sizeof(dp));
-		return calc(0, 0, 0, 0, n);
+		long long ans = 0;
+		for (int i = 0; i < x; i++) {
+			ans = (ans % mod + calc(i, 0, g, n) % mod) % mod;
+		}
+		return (int)ans;
 	}
 };
