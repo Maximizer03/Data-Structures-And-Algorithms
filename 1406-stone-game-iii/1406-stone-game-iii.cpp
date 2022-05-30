@@ -3,6 +3,7 @@ public:
 	string stoneGameIII(vector<int>& s) {
 		int n = s.size();
 		vector<int>dp(n + 1, INT_MIN);
+        // dp[i]-> maximum absolute diff of score i can get if i am on ith index
 		dp[n] = 0;
 		for (int i = n - 1; i >= 0; i--) {
 			int sum = 0;
