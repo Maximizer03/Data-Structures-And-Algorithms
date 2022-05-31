@@ -1,7 +1,7 @@
 class Solution {
 public:
 	bool containsNearbyDuplicate(vector<int>& nums, int k) {
-		map<int, vector<int>>m;
+		unordered_map<int, vector<int>>m;
 		int cnt = 0;
 		for (int i : nums) {
 			m[i].push_back(cnt);
