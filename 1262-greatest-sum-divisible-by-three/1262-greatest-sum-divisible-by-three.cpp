@@ -1,25 +1,17 @@
 class Solution {
 public:
-    int dp[100005][3];
-    int calc(int i, int r, vector<int>&nums){
-        int n=nums.size();
-        if(i==n){
-            if(r==0){
-                return 0;
-            }
-            else{
-                return -1e9;
-            }
-        }
-        if(dp[i][r]!=-1){
-            return dp[i][r];
-        }
-        int ans= calc(i+1,r,nums);
-        ans= max(ans, calc(i+1, (r+nums[i])%3,nums)+ nums[i]);
-        return dp[i][r]=ans;
-    }
     int maxSumDivThree(vector<int>& nums) {
-        memset(dp,-1,sizeof(dp));
-        return calc(0,0,nums);
+        int n=nums.size();
+        int dp[n + 1][3];
+        dp[n][0] = 0;
+        dp[n][1] = dp[n][2] = -1e9;
+        for (int i = n - 1; i >= 0; i--) {
+            for (int r = 0; r < 3; r++) {
+                int ans = dp[i + 1][r];
+                ans = max(ans, dp[i + 1][(r + nums[i]) % 3] + nums[i]);
+                dp[i][r] = ans;
+            }
+        }
+        return dp[0][0];
     }
 };
