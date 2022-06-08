@@ -9,9 +9,7 @@ public:
         long long sum = (1 + lc + rc) * (long long)mid;
         sum -= (lc) * (lc + 1) / 2;
         sum -= (rc) * (rc + 1) / 2;
-        // cout<<lc<<" "<<rc<<" "<<ind<<" "<<sum<<" "<<mid<<endl;
         return (sum <= mx);
-        
     }
     int maxValue(int n, int ind, int mx) {
         mx -= n;
