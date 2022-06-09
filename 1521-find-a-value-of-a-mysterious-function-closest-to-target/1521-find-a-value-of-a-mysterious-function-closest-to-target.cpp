@@ -2,7 +2,8 @@ class Solution {
 public:
     int closestToTarget(vector<int>& arr, int T) {
         int n = arr.size();
-        unordered_set<int>g, c;
+        unordered_set<int>c;
+        int ans = 2e9;
         for (int i = 0; i < n; i++) {
             unordered_set<int>t;
             t.insert(arr[i]);
@@ -11,12 +12,8 @@ public:
             }
             swap(c, t);
             for (auto &x : c) {
-                g.insert(x);
+                ans = min(ans, abs(x - T));
             }
-        }
-        int ans = 2e9;
-        for (auto &x : g) {
-            ans = min(ans, abs(x - T));
         }
         return ans;
     }
