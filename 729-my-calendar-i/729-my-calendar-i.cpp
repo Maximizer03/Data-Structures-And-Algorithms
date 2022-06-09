@@ -1,23 +1,27 @@
 class MyCalendar {
 public:
-	map<int, int>m;
-	MyCalendar() {
-	}
-	bool book(int start, int end) {
-		if (m.empty()) {
-			m[start] = end;
-			return true;
-		}
-		auto it = m.upper_bound(start);
-		if (it != m.end() && end > it->first) {
-			return false;
-		}
-		if (it != m.begin() && prev(it)->second > start) {
-			return false;
-		}
-		m[start] = end;
-		return true;
-	}
+    map<int,int>m;
+    MyCalendar() {
+        
+    }
+    
+    bool book(int start, int end) {
+        m[start]++;
+        m[end]--;
+        int sum=0,k=0;
+        for(auto &x:m){
+            sum+=x.second;
+            k=max(k,sum);
+        }
+        if(k<2){
+            return true;
+        }
+        else{
+            m[start]--;
+            m[end]++;
+            return false;
+        }
+    }
 };
 
 /**
