@@ -2,7 +2,8 @@ class Solution {
 public:
     vector<vector<int>> pacificAtlantic(vector<vector<int>>& h) {
         int n = h.size(), m = h[0].size();
-        vector<vector<bool>>vis(n, vector<bool>(m));
+        int vis[n][m];
+        memset(vis,false,sizeof(vis));
         queue<pair<int, int>>q;
         vector<vector<int>>cnt(n, vector<int>(m));
         for (int i = 0; i < n; i++) {
@@ -33,11 +34,7 @@ public:
                 }
             }
         }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < m; j++) {
-                vis[i][j] = 0;
-            }
-        }
+        memset(vis,false,sizeof(vis));
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
                 if (i == n - 1 || j == m - 1) {
