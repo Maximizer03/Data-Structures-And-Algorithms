@@ -20,32 +20,7 @@ public:
         mod = 1e9 + 7;
         vector<int>dx = { -1, -2, -2, -1, 1, 2, 2, 1};
         vector<int>dy = { -2, -1, 1, 2, -2, -1, 1, 2};
-        g = vector<vector<int>>(10);
-        for (int i = 0; i < 3; i++) {
-            for (int j = 0; j < 3; j++) {
-                int x = i, y = j;
-                for (int k = 0; k < 8; k++) {
-                    int xx = x + dx[k];
-                    int yy = y + dy[k];
-                    if (xx >= 0 && xx < 3 && yy >= 0 && yy < 3) {
-                        int u = x * 3 + y;
-                        int v = xx * 3 + yy;
-                        g[u].push_back(v);
-                    }
-                }
-            }
-        }
-        int x = 3, y = 1;
-        for (int k = 0; k < 8; k++) {
-            int xx = x + dx[k];
-            int yy = y + dy[k];
-            if (xx >= 0 && xx < 3 && yy >= 0 && yy < 3) {
-                int u = 9;
-                int v = xx * 3 + yy;
-                g[u].push_back(v);
-                g[v].push_back(u);
-            }
-        }
+        g =  { {4, 6}, {6, 8}, {7, 9}, {4, 8}, {3, 9, 0}, {}, {1, 7, 0}, {2, 6}, {1, 3}, {4, 2}};
         memset(dp, -1, sizeof(dp));
         long long ans = 0;
         for (int i = 0; i < 10; i++) {
